@@ -72,7 +72,5 @@ class QuizService {
   }
 }
 
-
-
 const quizService = new QuizService();
 export default quizService;
