@@ -6,11 +6,13 @@ import { NavLink } from 'react-router-dom';
 import { createHashHistory } from 'history';
 import { Card, TileCard, Row, Button, Form, Column, Alert, NavBar } from './widgets';
 import { quizService, questionService, categoryService } from './kazoot-service';
+import {  type QuizType, type CategoryType, type QuestionType } from './kazoot-service';
+
 
 const history = createHashHistory();
 
 export class Home extends Component {
-  sprs: Kvisser[] = [];
+  Question: QuizType[] = [];
   question: string = '';
   id: number = 0;
 
@@ -19,163 +21,166 @@ export class Home extends Component {
       <>
         <Card title="Welcome">This is Quiz App</Card>
         <Card title="spørsmål">
-          {this.sprs.map((spr) => (
+          {this.Question.map((spr) => (
             <Row key={spr.id}>
-              <Column>{spr.question}</Column>
+              <Column>{spr.title}</Column>
             </Row>
           ))}
         </Card>
         <Card title="Route test">
-          <Button.Light onClick={() => history.push('/')}>Back</Button.Light>
-          <Button.Danger onClick={() => history.push('/Browse')}>Browse</Button.Danger>
-          <Button.Light
+            <Button.Light
+            onClick={()=> history.push('/')}
+            >
+                Back
+            </Button.Light>
+            <Button.Danger
+            onClick={() => history.push('/Browse')}
+            >
+                Browse 
+            </Button.Danger>
+            <Button.Light
             onClick={() => {
-              history.push('/newQuiz');
-            }}
-          >
-            Ny quiz
-          </Button.Light>
-          <Button.Success onClick={() => history.push('/editQuiz')}>Endre quiz</Button.Success>
+                history.push("/newQuiz")
+            }
+            }
+            >
+                Ny quiz
+            </Button.Light>
+            <Button.Success
+            onClick={()=> history.push("/editQuiz")}
+            >
+                Endre quiz
+            </Button.Success>
         </Card>
       </>
     );
   }
 
   mounted() {
-    questionService.getAll().then((sprs) => (this.sprs = sprs));
+    questionService.getAllQuestions().then((c) => (this.Question = c));
   }
 }
 
 export class NewQuiz extends Component {
-  render() {
+  quiz= '';
+  hei= '';
+    render() {
     return (
-      <>
+        <>
         <Card title="New Quiz!">
-          <Row>
-            <Column width={3}>Quiz-title:</Column>
-            <Column>
-              <Form.Input
-                onChange={(event) => (this.quiz = event.currentTarget.value)}
-                value={this.quiz}
-              ></Form.Input>
-            </Column>
-            <Column></Column>
-          </Row>
-          <Row>
-            <Column width={3}>Quiz-description:</Column>
-            <Column>
-              <Form.Input
-                onChange={(event) => (this.quiz = event.currentTarget.value)}
-                value={this.quiz}
-              ></Form.Input>
-            </Column>
-            <Column></Column>
-          </Row>
-          <Row>
-            <Column width={3}>Quiz-Category:</Column>
-            <Column>
-              <Form.Input
-                onChange={(event) => (this.quiz = event.currentTarget.value)}
-                value={this.quiz}
-              ></Form.Input>
-            </Column>
-            <Column></Column>
-          </Row>
-          <Card>
             <Row>
-              <Column width={2}>Riktig:</Column>
-              <Column>
-                <Form.Input
-                  placeholder="spørsmål"
-                  onChange={(event) => (this.quiz = event.currentTarget.value)}
-                  value={this.quiz}
-                ></Form.Input>
-              </Column>
-              <Column>
-                <Button.Danger>X</Button.Danger>
-              </Column>
+                <Column width={3}>
+                    Quiz-title:
+                </Column>
+                <Column>
+                    <Form.Input type="text" onChange={(event) => (this.hei = event.currentTarget.value)} value={this.hei}></Form.Input>
+                </Column>  
+                <Column>
+                </Column>
+            </Row>    
+            <Row>
+                <Column width={3}>
+                    Quiz-description:
+                </Column>
+                <Column >
+                    <Form.Input type="text" onChange={(event) => (this.hei = event.currentTarget.value)} value={this.hei}></Form.Input>
+                </Column>
+                <Column>
+                </Column>
+            </Row>      
+            <Row>
+                <Column width={3}>
+                    Quiz-Category:
+                </Column>
+                <Column >
+                    <Form.Input type="text" onChange={(event) => (this.quiz = event.currentTarget.value)} value={this.quiz}></Form.Input>
+                </Column>
+                <Column>
+                </Column>
+            </Row>      
+            <Card>
+                <Row>
+                    <Column width={2}>
+                        Riktig:
+                    </Column>
+                    <Column >
+                        <Form.Input type="text" placeholder="spørsmål" onChange={(event) => (this.quiz = event.currentTarget.value)} value={this.quiz}></Form.Input>
+                    </Column>
+                    <Column>
+                        <Button.Danger onClick={()=>{}}>X</Button.Danger>
+                    </Column>
+                </Row>
+                <Row>
+                    <Column width={2}>
+                        <Form.Checkbox></Form.Checkbox>
+                    </Column>
+                    <Column>
+                        <Form.Input type="text" placeholder="Svar1" onChange={(event) => (this.quiz = event.currentTarget.value)} value={this.quiz}></Form.Input>
+                    </Column>
+                    <Column>
+                        <Button.Danger >X</Button.Danger>
+                    </Column>
+                </Row>
+                <Row>
+                    <Column width={2}>
+                        <Form.Checkbox></Form.Checkbox>
+                    </Column>
+                    <Column>
+                        <Form.Input type="text" placeholder="Svar2" onChange={(event) => (this.quiz = event.currentTarget.value)} value={this.quiz}></Form.Input>
+                    </Column>
+                    <Column>
+                        <Button.Danger onClick={()=>{}} >X</Button.Danger>
+                    </Column>  
+                </Row>
+                <Row>
+                    <Column width={2}>
+                        <Form.Checkbox></Form.Checkbox>
+                    </Column>
+                    <Column>
+                        <Form.Input type="text" placeholder="Svar3" onChange={(event) => (this.quiz = event.currentTarget.value)} value={this.quiz}></Form.Input>
+                    </Column>
+                    <Column>
+                        <Button.Danger onClick={()=>{}}>X</Button.Danger>
+                    </Column>
+                </Row>
+                <Row>
+                    <Column width={2}>
+                        <Form.Checkbox ></Form.Checkbox>
+                    </Column>
+                    <Column>
+                        <Form.Input type="text" placeholder="Svar4" onChange={(event) => (this.quiz = event.currentTarget.value)} value={this.quiz}></Form.Input>
+                    </Column>
+                    <Column>
+                        <Button.Danger onClick={()=>{}} >X</Button.Danger>
+                    </Column>
+                </Row>
+                <Row>
+                    <Column >
+                        <Button.Success onClick={()=>{}} >+</Button.Success>
+                    </Column>
+                </Row>
+            </Card>
+            <Row>
+                <Button.Success >Nytt spørsmål</Button.Success>
             </Row>
             <Row>
-              <Column width={2}>
-                <Form.Checkbox></Form.Checkbox>
-              </Column>
-              <Column>
-                <Form.Input
-                  placeholder="Svar1"
-                  onChange={(event) => (this.quiz = event.currentTarget.value)}
-                  value={this.quiz}
-                ></Form.Input>
-              </Column>
-              <Column>
-                <Button.Danger>X</Button.Danger>
-              </Column>
+                <Button.Light onClick={()=> history.push('/')}>
+                    Back
+                </Button.Light>
+                <Column>
+                    <Button.Success onClick={()=>{}}>Save</Button.Success>
+                </Column>
             </Row>
-            <Row>
-              <Column width={2}>
-                <Form.Checkbox></Form.Checkbox>
-              </Column>
-              <Column>
-                <Form.Input
-                  placeholder="Svar2"
-                  onChange={(event) => (this.quiz = event.currentTarget.value)}
-                  value={this.quiz}
-                ></Form.Input>
-              </Column>
-              <Column>
-                <Button.Danger>X</Button.Danger>
-              </Column>
-            </Row>
-            <Row>
-              <Column width={2}>
-                <Form.Checkbox></Form.Checkbox>
-              </Column>
-              <Column>
-                <Form.Input
-                  placeholder="Svar3"
-                  onChange={(event) => (this.quiz = event.currentTarget.value)}
-                  value={this.quiz}
-                ></Form.Input>
-              </Column>
-              <Column>
-                <Button.Danger>X</Button.Danger>
-              </Column>
-            </Row>
-            <Row>
-              <Column width={2}>
-                <Form.Checkbox></Form.Checkbox>
-              </Column>
-              <Column>
-                <Form.Input
-                  placeholder="Svar4"
-                  onChange={(event) => (this.quiz = event.currentTarget.value)}
-                  value={this.quiz}
-                ></Form.Input>
-              </Column>
-              <Column>
-                <Button.Danger>X</Button.Danger>
-              </Column>
-            </Row>
-            <Row>
-              <Column>
-                <Button.Success>+</Button.Success>
-              </Column>
-            </Row>
-          </Card>
-          <Row>
-            <Button.Success onClick={this.button}>Nytt spørsmål</Button.Success>
-          </Row>
-          <Row>
-            <Button.Light onClick={() => history.push('/')}>Back</Button.Light>
-            <Column>
-              <Button.Success>Save</Button.Success>
-            </Column>
-          </Row>
         </Card>
+
       </>
     );
   }
 }
 
+/**
+ * Component which renders the Browse Quizzes page.
+ */
 export class BrowseQuizzes extends Component {
   render() {
     return (
@@ -192,7 +197,7 @@ export class BrowseQuizzes extends Component {
 }
 
 /**
- * Renders the quiz tile cards in a grid based on how many quizzes there are.
+ * Renders the quiz tile cards in a grid.
  *
  * TODO: Find a way to dynamically change the number of quizzes in the array.
  *  Ex: Using the categories and search tools should remove the quizzes that don't match
@@ -201,97 +206,128 @@ export class BrowseQuizzes extends Component {
  */
 export class QuizTileGrid extends Component {
   render() {
-    const elements: [] = this.quizzesToJSX();
-    console.log(`render elements: ${elements}`);
-    console.log(`render elements[0].title: ${elements.title}`);
-
-    return <>{elements}</>;
+    const grid: [] = this.quizzesToJSX();
+    return <>{grid}</>;
   }
 
+  /**
+   * Returns an array of dummy quizzes.
+   * TODO: This should be replaced with a database call sometime.
+   */
   getQuizzes() {
     let quizzes: Quiz[] = [
       {
         id: 1,
         title: 'quiz 1',
+        description: 'woowowowoowow',
       },
       {
         id: 2,
         title: 'quiz 2',
+        description: 'wewewewewe',
       },
       {
         id: 3,
         title: 'quiz 3',
+        description: 'wuwuwuwuwu',
       },
       {
         id: 4,
         title: 'quiz 4',
+        description: 'wewewowow',
       },
       {
         id: 5,
         title: 'quiz 5',
+        description: 'djwidjwiwewewowow',
       },
       {
         id: 6,
         title: 'quiz 6',
+        description: 'kjdskad',
       },
       {
         id: 7,
         title: 'quiz 7',
+        description: 'hdsoafiosaj',
       },
       {
         id: 8,
         title: 'quiz 8',
+        description: 'jfkdlsajflkdsafø',
       },
       {
         id: 9,
         title: 'quiz 9',
+        description: 'jsidjaidsaj',
       },
       {
         id: 10,
         title: 'quiz 10',
+        description: 'sljdskal',
       },
       {
         id: 11,
         title: 'quiz 11',
+        description: 'jdksaljdskaljds',
       },
       {
         id: 12,
         title: 'quiz 12',
+        description: 'jdjskaldjskal',
       },
     ];
 
     return quizzes;
   }
 
+  /**
+   * Generates the grid of quizzes and pushes it to an
+   * array of JSX elements.
+   */
   quizzesToJSX() {
-    let elements: [] = [];
+    // Array of rows of quizzes in columns
+    let grid: [] = [];
+
+    // TODO: Replace with database call sometime?
     let quizzes = this.getQuizzes();
 
+    // width = number of quizzes per row
     const width = 4;
     let i = 1;
     let k = 0;
+
+    /* Slices the array every 'width' iteration of the loop.
+     * Surround each quiz in a slice with Column (@see rowContents(row)),
+     * then surrounds the entire slice with a Row tag.
+     */
     for (; i < quizzes.length + 1; ++i) {
-      console.log(`i: ${i}`);
       if (i % width == 0) {
         const currentRow = quizzes.slice(k, i);
-        const element = this.rowContents(currentRow);
-        elements.push(<Row>{element}</Row>);
+        const row = this.rowContents(currentRow);
+        grid.push(<Row>{row}</Row>);
         k = i;
       }
     }
-    const remainingRow = quizzes.slice(k, i);
-    const element = this.rowContents(remainingRow);
-    elements.push(<Row>{element}</Row>);
 
-    return elements;
+    // Add the remaining quizzes to the last row
+    const remainingRow = quizzes.slice(k, i);
+    const row = this.rowContents(remainingRow);
+    grid.push(<Row>{row}</Row>);
+
+    return grid;
   }
 
+  /**
+   * Surrounds each quiz in a row with a Column tag and pushes it to an array of
+   * JSX elements.
+   */
   rowContents(row) {
     let elements: [] = [];
     for (const quiz of row) {
       elements.push(
         <Column>
-          <Quiz id={quiz.id} title={quiz.title}></Quiz>
+          <Quiz id={quiz.id} title={quiz.title} description={quiz.description}></Quiz>
         </Column>
       );
     }
@@ -307,6 +343,7 @@ export class QuizTileGrid extends Component {
 export class Quiz extends Component {
   title: string = '';
   id: number = 0;
+  description: string = '';
 
   playButton() {
     console.log(`Playing ${this.props.title}`);
@@ -320,6 +357,8 @@ export class Quiz extends Component {
     return (
       <>
         <TileCard title={this.props.title}>
+          {this.description}
+          <hr />
           <Row>
             <Column left>
               <Button.Success onClick={this.playButton}>Play</Button.Success>
@@ -335,136 +374,125 @@ export class Quiz extends Component {
 
   mounted() {
     // quizService.getQuizInfo(this.props.id).then((quiz) => (this.props.title = quiz.title));
+    this.description = 'test';
   }
 }
 
 export class EditQuiz extends Component {
+    quiz= '';
+    hei= '';
+
   render() {
     return (
       <>
         <Card title="Edit Quiz">
-          <Row>
-            <Column width={3}>Quiz-title:</Column>
-            <Column>
-              <Form.Input
-                onChange={(event) => (this.quiz = event.currentTarget.value)}
-                value={this.quiz}
-              ></Form.Input>
-            </Column>
-            <Column>
-              <Button.Danger onClick={this.button()}>SLETT QUIZ</Button.Danger>
-            </Column>
-          </Row>
-          <Row>
-            <Column width={3}>Quiz-description:</Column>
-            <Column>
-              <Form.Input
-                onChange={(event) => (this.quiz = event.currentTarget.value)}
-                value={this.quiz}
-              ></Form.Input>
-            </Column>
-            <Column></Column>
-          </Row>
-          <Row>
-            <Column width={3}>Quiz-Category:</Column>
-            <Column>
-              <Form.Input
-                onChange={(event) => (this.quiz = event.currentTarget.value)}
-                value={this.quiz}
-              ></Form.Input>
-            </Column>
-            <Column></Column>
-          </Row>
-          <Card>
             <Row>
-              <Column width={2}>Riktig:</Column>
-              <Column>
-                <Form.Input
-                  placeholder="spørsmål"
-                  onChange={(event) => (this.quiz = event.currentTarget.value)}
-                  value={this.quiz}
-                ></Form.Input>
-              </Column>
-              <Column>
-                <Button.Danger>X</Button.Danger>
-              </Column>
+                <Column width={3}>
+                    Quiz-title:
+                </Column>
+                <Column>
+                    <Form.Input type="text" onChange={(event) => (this.quiz = event.currentTarget.value)} value={this.quiz}></Form.Input>
+                </Column>
+                <Column >                    
+                    <Button.Danger onClick={this.button()}>SLETT QUIZ</Button.Danger>
+                </Column>
+                
+            </Row>    
+            <Row>
+                <Column width={3}>
+                    Quiz-description:
+                </Column>
+                <Column >
+                    <Form.Input type="text" onChange={(event) => (this.quiz = event.currentTarget.value)} value={this.quiz}></Form.Input>
+                </Column>
+                <Column>
+                </Column>
+            </Row>      
+            <Row>
+                <Column width={3}>
+                    Quiz-Category:
+                </Column>
+                <Column >
+                    <Form.Input type="text" onChange={(event) => (this.quiz = event.currentTarget.value)} value={this.quiz}></Form.Input>
+                </Column>
+                <Column>
+                </Column>
+            </Row>      
+            <Card>
+                <Row>
+                    <Column width={2}>
+                        Riktig:
+                    </Column>
+                    <Column>
+                        <Form.Input type="text" placeholder="spørsmål" onChange={(event) => (this.hei = event.currentTarget.value)} value={this.hei}></Form.Input>
+                    </Column>
+                    <Column>
+                        <Button.Danger onClick={()=>{}}>X</Button.Danger>
+                    </Column>
+                </Row>
+                <Row>
+                    <Column width={2}>
+                        <Form.Checkbox></Form.Checkbox>
+                    </Column>
+                    <Column>
+                        <Form.Input type="text" placeholder="Svar1" onChange={(event) => (this.quiz = event.currentTarget.value)} value={this.quiz}></Form.Input>
+                    </Column>
+                    <Column>
+                        <Button.Danger onClick={()=>{}}>X</Button.Danger>
+                    </Column>
+                </Row>
+                <Row>
+                    <Column width={2}>
+                        <Form.Checkbox></Form.Checkbox>
+                    </Column>
+                    <Column>
+                        <Form.Input type="text" placeholder="Svar2" onChange={(event) => (this.quiz = event.currentTarget.value)} value={this.quiz}></Form.Input>
+                    </Column>
+                    <Column>
+                        <Button.Danger onClick={()=>{}}>X</Button.Danger>
+                    </Column>  
+                </Row>
+                <Row>
+                    <Column width={2}>
+                        <Form.Checkbox ></Form.Checkbox>
+                    </Column>
+                    <Column>
+                        <Form.Input type="text" placeholder="Svar3" onChange={(event) => (this.quiz = event.currentTarget.value)} value={this.quiz}></Form.Input>
+                    </Column>
+                    <Column>
+                        <Button.Danger onClick={()=>{}}>X</Button.Danger>
+                    </Column>
+                </Row>
+                <Row>
+                    <Column width={2}>
+                        <Form.Checkbox checked={false} onChange={()=>{}}></Form.Checkbox>
+                    </Column>
+                    <Column>
+                        <Form.Input type="text" placeholder="Svar4" onChange={(event) => (this.hei = event.currentTarget.value)} value={this.hei}></Form.Input>
+                    </Column>
+                    <Column>
+                        <Button.Danger onClick={()=>{}}>X</Button.Danger>
+                    </Column>
+                </Row>
+                <Row>
+                    <Column center>
+                        <Button.Success onClick={() => {}} >+</Button.Success>
+                    </Column>
+                </Row>
+            </Card>
+            <Row>
+                <Button.Success onClick={this.button}>Nytt spørsmål</Button.Success>
             </Row>
             <Row>
-              <Column width={2}>
-                <Form.Checkbox></Form.Checkbox>
-              </Column>
-              <Column>
-                <Form.Input
-                  placeholder="Svar1"
-                  onChange={(event) => (this.quiz = event.currentTarget.value)}
-                  value={this.quiz}
-                ></Form.Input>
-              </Column>
-              <Column>
-                <Button.Danger>X</Button.Danger>
-              </Column>
-            </Row>
-            <Row>
-              <Column width={2}>
-                <Form.Checkbox></Form.Checkbox>
-              </Column>
-              <Column>
-                <Form.Input
-                  placeholder="Svar2"
-                  onChange={(event) => (this.quiz = event.currentTarget.value)}
-                  value={this.quiz}
-                ></Form.Input>
-              </Column>
-              <Column>
-                <Button.Danger>X</Button.Danger>
-              </Column>
-            </Row>
-            <Row>
-              <Column width={2}>
-                <Form.Checkbox></Form.Checkbox>
-              </Column>
-              <Column>
-                <Form.Input
-                  placeholder="Svar3"
-                  onChange={(event) => (this.quiz = event.currentTarget.value)}
-                  value={this.quiz}
-                ></Form.Input>
-              </Column>
-              <Column>
-                <Button.Danger>X</Button.Danger>
-              </Column>
-            </Row>
-            <Row>
-              <Column width={2}>
-                <Form.Checkbox></Form.Checkbox>
-              </Column>
-              <Column>
-                <Form.Input
-                  placeholder="Svar4"
-                  onChange={(event) => (this.quiz = event.currentTarget.value)}
-                  value={this.quiz}
-                ></Form.Input>
-              </Column>
-              <Column>
-                <Button.Danger>X</Button.Danger>
-              </Column>
-            </Row>
-            <Row>
-              <Column center>
-                <Button.Success>+</Button.Success>
-              </Column>
-            </Row>
-          </Card>
-          <Row>
-            <Button.Success onClick={this.button}>Nytt spørsmål</Button.Success>
-          </Row>
-          <Row>
-            <Button.Light onClick={() => history.push('/')}>Back</Button.Light>
-            <Column>
-              <Button.Success>Save</Button.Success>
-            </Column>
-          </Row>
+                <Button.Light onClick={()=> history.push('/')}>
+                    Back
+                </Button.Light>
+                <Column>
+                    <Button.Success onClick={()=>{}}>Save</Button.Success>
+                </Column>
+            </Row>        
         </Card>
+
       </>
     );
   }
@@ -472,7 +500,7 @@ export class EditQuiz extends Component {
   mounted() {}
 
   button() {
-    console.log('LOL');
+      console.log("LOL")
   }
 }
 
@@ -487,29 +515,58 @@ export class EditQuiz extends Component {
 */
 
 export class ListQuizzes extends Component {
-  quizzes: Kvisser[] = [];
+    quizzes: QuizType[] = [];
+    questions: QuestionType[] = [];
+    categories: CategoryType[] = [];
 
-  render() {
-    return (
-      <>
-        <Card title="Categories">{this.categories}</Card>
-        <Card title="Search"></Card>
-        <Card title="Quizzes">
+    render() {
+        return (
+            <>
+        <Card title="Quizzes">       
           {this.quizzes.map((quiz) => (
-            <Row key={quiz.id}>
+            <Card key={quiz.id} title={quiz.title}>
               <Column>
-                {quiz.title}
-                {quiz.id}
+                <Row>Quiz Id: {quiz.id}</Row>
+                <Row>Description: {quiz.description}</Row>
+                <Row>Category: </Row>
                 {/* <NavLink to={'/quizzes/' + quiz.id}>{quiz.title}</NavLink> */}
               </Column>
-            </Row>
+            </Card>
           ))}
-          <Button.Light onClick={() => history.push('/')}>Back</Button.Light>
         </Card>
+        <Card title="Questions">
+            {this.questions.map((question) => (
+                <Card key={question.id} title={question.question}>
+                    <Column>
+                        <Row>Question Id: {question.id}</Row>
+                        <Row> <br></br></Row>
+                        {/* <NavLink to={'/quizzes/' + quiz.id}>{quiz.title}</NavLink> */}
+                        <ul>
+                            <li>{question.answ0}</li>
+                            <li>{question.answ1}</li>
+                            <li>{question.answ2}</li>
+                            <li>{question.answ3}</li>
+                        </ul>
+                    </Column>
+                </Card>
+            ))}
+        </Card>
+        <Card title="Categories">
+            {this.categories.map((category) => (
+                <Card key={category.id} title={category.category}>
+                        <Row>Category Id: {category.id}</Row>   
+                </Card>
+            ))}
+        </Card>
+        <Button.Light onClick={()=> history.push('/')}>
+                Back
+        </Button.Light>
       </>
-    );
-  }
-  mounted() {
-    quizService.getAll().then((i) => (this.quizzes = i));
-  }
+        )
+    }
+    mounted() {
+        quizService.getAllQuizzes().then((q) => (this.quizzes = q));
+        questionService.getAllQuestions().then((p) => (this.questions = p));
+        categoryService.getAllCategories().then((c) => (this.categories = c));
+      }
 }
