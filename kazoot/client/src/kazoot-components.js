@@ -375,7 +375,8 @@ export class Quiz extends Component {
               <Button.Success onClick={this.playButton}>Play</Button.Success>
             </Column>
             <Column right>
-              <Button.Danger onClick={() => history.push('/')>Edit</Button.Danger>
+              <Button.Danger 
+              onClick={this.editButton}>Edit</Button.Danger>
             </Column>
           </Row>
         </TileCard>
@@ -509,7 +510,7 @@ export class EditQuiz extends Component {
             <Button.Success onClick={this.button}>Nytt spørsmål</Button.Success>
           </Row>
           <Row>
-            <Button.Light onClick={() => history.push('/editQuiz')}>Back</Button.Light>
+            <Button.Light onClick={() => history.push('/')}>Back</Button.Light>
             <Column>
               <Button.Success>Save</Button.Success>
             </Column>
